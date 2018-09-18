@@ -1,0 +1,77 @@
+---
+title: "R Day 2"
+author: "Eileen"
+date: "9/18/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+here::here("data", "gapminder5.csv")
+gapminder = read.csv(here::here("data", "gapminder5.csv"))
+```
+
+## Converting factors to characters ##
+```{r}
+str(gapminder)
+gapminder$country =  as.character(gapminder$country)
+gapminder$continent = as.character(gapminder$continent)
+```
+```{r}
+obs = 1:nrow(gapminder)
+for (i in obs) {
+  gapminder[i, "log_gdpPercap"] = log(gapminder[i, "gdpPercap"])
+  gapminder[i,"log_pop"] = log(gapminder[i, "pop"])
+} 
+```
+
+```{r}
+continent = unique(gapminder$continent)
+
+for (i in continent){
+  mean_le = mean(gapminder$lifeExp[gapminder$continent == i], na.rm = T)
+  print(paste0(i, ":", mean_le))
+}
+```
+```{r}
+con = unique(gapminder$country)
+for (i in continent){
+  print(paste0("Continent:", i))
+  for (j in con){
+    mean_le = mean(gapminder$lifeExp[gapminder$continent == i &
+                                       gapminder$country == j],
+                   na.rm = T)
+    print(paste0(j, ":", mean_le))
+  }
+}
+```
+
+```{r}
+for (i in unique(gapminder$year)){
+  mp = mean(gapminder$pop[gapminder$year == i])
+  if (i < 1987){
+    print(paste(i, "is less than 1987"))}
+  else
+      print(paste("Mean population in", i, "is", mp))
+}
+```
+
+```{r}
+my_function = 
+  function(df, variable, continent) {
+    var = df[[variable]][df$continent ==continent]
+    m_le = mean(var)
+    me_le = median(var)
+    max_le = max(var)
+    min_le = min(var)
+    cat("Continent:", continent,
+        "\nMean Life Expectency:", m_le,
+        "\nMedian Life Expectency:", me_le,
+        "\nMaxium Life Expectency:", max_le,
+        "\nMinium Life Expectency:", min_le)
+  }
+my_function(gapminder, "lifeExp", "Asia")
+```
