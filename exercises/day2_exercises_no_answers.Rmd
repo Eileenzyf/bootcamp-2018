@@ -63,7 +63,8 @@ Write a script that finds the mean life expectancy by country for countries whos
 Write a script that loops through the `gapminder` data by continent and prints out whether the mean life expectancy is smaller than 50, between 50 and 70, or greater than 70.
 
 ```{asis}
-### Answer
+mean_all = mean(gapminder$pop)
+for (i in unique())
 ```
 
 ```{r}
