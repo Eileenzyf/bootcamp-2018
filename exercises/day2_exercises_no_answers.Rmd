@@ -64,7 +64,13 @@ Write a script that loops through the `gapminder` data by continent and prints o
 
 ```{asis}
 mean_all = mean(gapminder$pop)
-for (i in unique())
+for (i in unique(gapminder$country)) {
+  contry_mean  = mean(gapminder$pop[gapminder$country==i])
+  if (country_mean < mean_all) {
+     mean_le <- mean(gapminder$lifeExp[gapminder$country==i])
+     print(paste("Mean Life Expectancy in", i, "is", mean_le))
+   } 
+}
 ```
 
 ```{r}
