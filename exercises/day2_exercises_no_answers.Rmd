@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo=answers, eval=answers,
 Load the `gapminder` dataset.
 
 ```{asis}
-### Answer
+gapminder = read.csv(here::here("data/gapminder5.csv"))
 ```
 
 ```{r}
