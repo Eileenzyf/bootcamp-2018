@@ -37,8 +37,13 @@ Use an if() statement to print a suitable message reporting whether there are an
 
 Hint: use the `any` function.
 
-```{asis}
-### Answer
+```{r}
+
+if (any(gapminder$year == 2002)) {
+  print("There are records from 2002")
+} else {
+  print("No records for 2002")
+}
 ```
 
 ```{r}
