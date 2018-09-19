@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+author: "Eileen"
+date: "9/19/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1 ##
+```{r}
+nys_school = read.csv("data/nys_schools.csv")
+nys_acs = read.csv("data/nys_acs.csv")
+```
+
+## Task 2 ##
+```{r}
+str(nys_school)
+which(is.na(nys_school) == T)
+str(nys_acs)
+which(is.na(nys_acs) == T)
+```
+
+## Task 3##
+
+# a
+```{r}
+nys_school1 = filter(nys_school, total_enroll!= -99, per_free_lunch != -99, per_reduced_lunch != -99, per_lep != -99, mean_ela_score != 99, mean_math_score != 99)
+```
+
+```{r}
+for (i in 1:nrow(nys_acs)) {
+  if (nys_acs$county_per_poverty[i] < 0.11){
+    nys_acs$poverty[i] ="Low"
+    }else{
+      if (nys_acs$county_per_poverty[i] < 0.15){
+        nys_acs$poverty[i] ="Medium"
+        }else{
+          nys_acs$poverty[i] ="High"
+        }
+    }
+}
+```
+
+```{r}
+school = 
+  nys_school1 %>%
+  group_by(year) %>%
+  mutate(z_math = scale(mean_math_score), z_ela = scale(mean_ela_score)) %>%
+  ungroup()
+```
+
+```{r}
+county = merge(school, nys_acs, by = "county_name")
+```
